@@ -1,5 +1,5 @@
 import React from 'react';
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
+import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@material-ui/core';
 import { ProcessedVideo } from '../common/interfaces';
 
 interface VideosTableProps {
@@ -15,6 +15,8 @@ export const VideosTable: React.FC<VideosTableProps> = ({ videos }) => {
             <TableCell>Video Name</TableCell>
             <TableCell>Author</TableCell>
             <TableCell>Categories</TableCell>
+            <TableCell>Highest quality format</TableCell>
+            <TableCell>Release date</TableCell>
             <TableCell>Options</TableCell>
           </TableRow>
         </TableHead>
@@ -26,7 +28,12 @@ export const VideosTable: React.FC<VideosTableProps> = ({ videos }) => {
               </TableCell>
               <TableCell>{video.author}</TableCell>
               <TableCell>{video.categories.join(', ')}</TableCell>
-              <TableCell> {/* add buttons here as needed */}  </TableCell>
+              <TableCell></TableCell>
+              <TableCell></TableCell>
+              <TableCell>
+                <Button variant="contained" color="primary">Edit</Button>
+                <Button variant="contained" color="secondary">Delete</Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
