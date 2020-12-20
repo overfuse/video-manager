@@ -1,14 +1,14 @@
 import React from 'react';
-import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@material-ui/core';
+import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 import { ProcessedVideo } from '../common/interfaces';
 
 interface VideosTableProps {
-    videos: ProcessedVideo[];
+  videos: ProcessedVideo[];
 }
 
 export const VideosTable: React.FC<VideosTableProps> = ({ videos }) => {
   return (
-    <TableContainer component={Paper} style={{ marginTop: '40px' }}>
+    <TableContainer component={Paper}>
       <Table>
         <TableHead>
           <TableRow>
@@ -31,8 +31,12 @@ export const VideosTable: React.FC<VideosTableProps> = ({ videos }) => {
               <TableCell></TableCell>
               <TableCell></TableCell>
               <TableCell>
-                <Button variant="contained" color="primary">Edit</Button>
-                <Button variant="contained" color="secondary">Delete</Button>
+                <Button variant="contained" color="primary">
+                  Edit
+                </Button>
+                <Button variant="contained" color="secondary">
+                  Delete
+                </Button>
               </TableCell>
             </TableRow>
           ))}
