@@ -8,8 +8,9 @@ export const AddVideo: React.FC = () => {
   const [location, setLocation] = useLocation();
   const [video, setVideo] = useState<Video>(() => ({ id: +new Date(), name: '', catIds: [] }));
 
-  const onSubmit = (authorId: number, video: Video) => {
-    addVideo(authorId, video).then(() => setLocation('/'));
+  const onSubmit = async (authorId: number, video: Video) => {
+    await addVideo(authorId, video);
+    setLocation('/');
   };
 
   return (

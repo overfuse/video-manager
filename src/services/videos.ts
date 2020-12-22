@@ -13,6 +13,17 @@ export async function addVideo(authorId: number, video: Video) {
   await setAuthorVideos(authorId, [...author.videos, video]);
 }
 
+export async function getVideoById(authorId: number, videoId: number): Promise<Video | undefined> {
+  const author = await getAuthorById(authorId);
+  return author.videos.find((video) => video.id === videoId);
+}
+
+export async function deleteVideo(authorId: number, videoId: number) {
+  const author = await getAuthorById(authorId);
+  const updatedVideos = [...author.videos.filter((video) => video.id !== videoId)];
+  await setAuthorVideos(authorId, updatedVideos);
+}
+
 export function getProcessedVideos(authors: Author[], categories: Category[]): ProcessedVideo[] {
   const catByIds = categories.reduce<CategoryById>((catByIds, cat) => {
     catByIds[cat.id] = cat;
@@ -31,6 +42,7 @@ function processAuthorVideos(author: Author, catByIds: CategoryById): ProcessedV
     id: video.id,
     name: video.name,
     author: author.name,
+    authorId: author.id,
     categories: video.catIds.map((catId) => catByIds[catId]?.name),
   }));
 }

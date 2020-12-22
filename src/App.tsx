@@ -4,6 +4,7 @@ import { Link, Route, Switch } from 'wouter';
 
 import { AddVideo } from './components/AddVideo';
 import { VideosOverview } from './components/VideosOverview';
+import { EditVideoPage } from './components/EditVideoPage';
 
 const useStyles = makeStyles(() => ({
   grow: {
@@ -38,6 +39,9 @@ const App: React.FC = () => {
           </Route>
           <Route path="/add-video">
             <AddVideo />
+          </Route>
+          <Route path="/authors/:authorId/videos/:videoId">
+            <EditVideoPage />
           </Route>
         </Switch>
       </Container>

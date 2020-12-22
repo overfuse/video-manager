@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 import { ProcessedVideo } from '../common/interfaces';
+import { Link } from 'wouter';
 
 interface VideosTableProps {
   videos: ProcessedVideo[];
@@ -31,9 +32,11 @@ export const VideosTable: React.FC<VideosTableProps> = ({ videos }) => {
               <TableCell></TableCell>
               <TableCell></TableCell>
               <TableCell>
-                <Button variant="contained" color="primary">
-                  Edit
-                </Button>
+                <Link href={`/authors/${video.authorId}/videos/${video.id}`}>
+                  <Button variant="contained" color="primary">
+                    Edit
+                  </Button>
+                </Link>
                 <Button variant="contained" color="secondary">
                   Delete
                 </Button>
