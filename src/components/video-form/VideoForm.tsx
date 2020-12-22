@@ -14,6 +14,7 @@ export const VideoForm: React.FC<VideoFormProps> = ({ authorId, video, onSubmit,
   const [name, setName] = useState(video.name);
   const [selectedAuthor, setAuthor] = useState<ValueType<OptionType, false> | null>(null);
   const [selectedCats, setCats] = useState<ValueType<OptionType, true>>([]);
+  const [releaseDate, setReleaseDate] = useState(video.releaseDate);
 
   const isValid = !!name && !!selectedAuthor && !!selectedCats?.length;
 
@@ -37,7 +38,7 @@ export const VideoForm: React.FC<VideoFormProps> = ({ authorId, video, onSubmit,
 
   const handleSubmit = () => {
     if (selectedAuthor && selectedCats) {
-      onSubmit(selectedAuthor.value, { id: video.id, name, catIds: selectedCats.map((cat) => cat.value) });
+      onSubmit(selectedAuthor.value, { id: video.id, name, catIds: selectedCats.map((cat) => cat.value), releaseDate });
     }
   };
 
@@ -64,6 +65,9 @@ export const VideoForm: React.FC<VideoFormProps> = ({ authorId, video, onSubmit,
           onChange={(cats) => setCats(cats)}
           options={catetoryOptions}
         />
+      </FormRow>
+      <FormRow label="Release date">
+        <OutlinedInput placeholder="YYYY-MM-DD" margin="dense" value={releaseDate} onChange={(e) => setReleaseDate(e.target.value)} />
       </FormRow>
       <FormRow>
         <Actions>

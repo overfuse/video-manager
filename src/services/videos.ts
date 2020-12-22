@@ -1,3 +1,4 @@
+import { parseISO } from 'date-fns';
 import { Author, Category, ProcessedVideo, Video } from '../common/interfaces';
 import { getCategories } from './categories';
 import { getAuthorById, getAuthors, setAuthorVideos } from './authors';
@@ -46,5 +47,6 @@ function processAuthorVideos(author: Author, catByIds: CategoryById): ProcessedV
     author: author.name,
     authorId: author.id,
     categories: video.catIds.map((catId) => catByIds[catId]?.name),
+    releaseDate: video.releaseDate && parseISO(video.releaseDate),
   }));
 }

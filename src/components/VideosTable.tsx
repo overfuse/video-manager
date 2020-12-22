@@ -50,7 +50,7 @@ export const VideosTable: React.FC<VideosTableProps> = ({ videos, onDelete }) =>
               <StyledTableCell>{video.author}</StyledTableCell>
               <StyledTableCell>{video.categories.join(', ')}</StyledTableCell>
               <StyledTableCell></StyledTableCell>
-              <StyledTableCell></StyledTableCell>
+              <StyledTableCell>{video.releaseDate && format(video.releaseDate, 'dd.LL.yyyy')}</StyledTableCell>
               <StyledTableCell>
                 <Actions>
                   <Link href={`/authors/${video.authorId}/videos/${video.id}`}>
