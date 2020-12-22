@@ -1,5 +1,7 @@
 import React from 'react';
 import { Button, makeStyles, Modal } from '@material-ui/core';
+import { ProcessedVideo } from '../common/interfaces';
+import { Actions } from './Actions';
 
 const useStyles = makeStyles((theme) => ({
   body: {
@@ -15,24 +17,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 type DeleteModalProps = {
-  open?: boolean;
+  video: ProcessedVideo | null;
   onDelete?: () => void;
   onClose?: () => void;
 };
 
-export const DeleteModal: React.FC<DeleteModalProps> = ({ open, onDelete, onClose }) => {
+export const DeleteModal: React.FC<DeleteModalProps> = ({ video, onDelete, onClose }) => {
   const classes = useStyles();
 
   return (
-    <Modal open={!!open} onClose={onClose}>
+    <Modal open={!!video} onClose={onClose}>
       <div className={classes.body}>
-        <h3>Are you sure to delete the video?</h3>
-        <Button variant="contained" color="secondary" onClick={onDelete}>
-          Delete
-        </Button>
-        <Button variant="contained" color="default" onClick={onClose}>
-          Cancel
-        </Button>
+        <h2>Delete video: {video?.name}?</h2>
+        <Actions>
+          <Button variant="contained" color="secondary" onClick={onDelete}>
+            Delete
+          </Button>
+          <Button variant="contained" color="default" onClick={onClose}>
+            Cancel
+          </Button>
+        </Actions>
       </div>
     </Modal>
   );

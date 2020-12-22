@@ -1,9 +1,10 @@
 import React from 'react';
 import { useLocation } from 'wouter';
+import { useAsync } from 'react-use';
+
 import { addVideo, deleteVideo, getVideoById } from '../services/videos';
 import { Video } from '../common/interfaces';
 import { VideoForm } from './video-form/VideoForm';
-import { useAsync } from 'react-use';
 
 type EditVideoProps = {
   authorId: number;

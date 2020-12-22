@@ -4,7 +4,9 @@ import { getAuthorById, getAuthors, setAuthorVideos } from './authors';
 
 export function getVideos(): Promise<ProcessedVideo[]> {
   return Promise.all([getCategories(), getAuthors()]).then(([categories, authors]) => {
-    return getProcessedVideos(authors, categories);
+    const videos = getProcessedVideos(authors, categories);
+    videos.sort((a, b) => a.id - b.id);
+    return videos;
   });
 }
 

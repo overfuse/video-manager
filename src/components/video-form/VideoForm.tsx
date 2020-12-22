@@ -1,16 +1,21 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { FormRow } from './FormRow';
-import { Button, Grid, OutlinedInput } from '@material-ui/core';
-import Select, { ValueType } from 'react-select';
 import { useAsync } from 'react-use';
+import { Button, FormControl, Grid, OutlinedInput, Typography } from '@material-ui/core';
+import Select, { ValueType } from 'react-select';
+
 import { getAuthors } from '../../services/authors';
 import { getCategories } from '../../services/categories';
 import { Author, Category, Video } from '../../common/interfaces';
+
+import { FormRow } from './FormRow';
+import { Actions } from '../Actions';
 
 export const VideoForm: React.FC<VideoFormProps> = ({ authorId, video, onSubmit, onCancel }) => {
   const [name, setName] = useState(video.name);
   const [selectedAuthor, setAuthor] = useState<ValueType<OptionType, false> | null>(null);
   const [selectedCats, setCats] = useState<ValueType<OptionType, true>>([]);
+
+  const isValid = !!name && !!selectedAuthor && !!selectedCats?.length;
 
   const { value: authors = [] } = useAsync(() => getAuthors(), []);
   const { value: categories = [] } = useAsync(() => getCategories(), []);
@@ -37,24 +42,44 @@ export const VideoForm: React.FC<VideoFormProps> = ({ authorId, video, onSubmit,
   };
 
   return (
-    <Grid container>
+    <Grid container spacing={2}>
       <FormRow label="Video name">
-        <OutlinedInput placeholder="Video name" margin="dense" value={name} onChange={(e) => setName(e.target.value)} />
+        <FormControl fullWidth>
+          <OutlinedInput placeholder="Video name" margin="dense" value={name} onChange={(e) => setName(e.target.value)} />
+        </FormControl>
       </FormRow>
       <FormRow label="Video author">
-        <Select value={selectedAuthor} onChange={(selected) => setAuthor(selected)} options={authorOptions} />
+        <Select
+          value={selectedAuthor}
+          placeholder="Select author..."
+          onChange={(selected) => setAuthor(selected)}
+          options={authorOptions}
+        />
       </FormRow>
       <FormRow label="Video category">
-        <Select isMulti value={selectedCats} onChange={(cats) => setCats(cats)} options={catetoryOptions} />
+        <Select
+          isMulti
+          value={selectedCats}
+          placeholder="Select categories..."
+          onChange={(cats) => setCats(cats)}
+          options={catetoryOptions}
+        />
       </FormRow>
       <FormRow>
-        <Button variant="contained" color="primary" onClick={handleSubmit}>
-          Submit
-        </Button>
-        <Button variant="contained" color="default" onClick={onCancel}>
-          Cancel
-        </Button>
+        <Actions>
+          <Button variant="contained" color="primary" onClick={handleSubmit} disabled={!isValid}>
+            Submit
+          </Button>
+          <Button variant="contained" color="default" onClick={onCancel}>
+            Cancel
+          </Button>
+        </Actions>
       </FormRow>
+      {!isValid && (
+        <FormRow>
+          <Typography color="error">All fields are mandatory</Typography>
+        </FormRow>
+      )}
     </Grid>
   );
 };
