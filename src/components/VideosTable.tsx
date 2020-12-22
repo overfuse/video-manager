@@ -49,7 +49,7 @@ export const VideosTable: React.FC<VideosTableProps> = ({ videos, onDelete }) =>
               </StyledTableCell>
               <StyledTableCell>{video.author}</StyledTableCell>
               <StyledTableCell>{video.categories.join(', ')}</StyledTableCell>
-              <StyledTableCell></StyledTableCell>
+              <StyledTableCell>{video.highestFormat && `${video.highestFormat.name} ${video.highestFormat.res}`}</StyledTableCell>
               <StyledTableCell>{video.releaseDate && format(video.releaseDate, 'dd.LL.yyyy')}</StyledTableCell>
               <StyledTableCell>
                 <Actions>

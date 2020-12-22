@@ -15,7 +15,7 @@ export const AddVideo: React.FC = () => {
   }));
 
   const onSubmit = async (authorId: number, video: Video) => {
-    await addVideo(authorId, video);
+    await addVideo(authorId, { ...video, formats: { one: { res: '1080p', size: 1000 } } });
     setLocation('/');
   };
 

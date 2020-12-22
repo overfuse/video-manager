@@ -1,5 +1,5 @@
 import { parseISO } from 'date-fns';
-import { Author, Category, ProcessedVideo, Video } from '../common/interfaces';
+import { Author, Category, HightestVideoFormat, ProcessedVideo, Video, VideoFormat, VideoFormatCollection } from '../common/interfaces';
 import { getCategories } from './categories';
 import { getAuthorById, getAuthors, setAuthorVideos } from './authors';
 
@@ -47,6 +47,19 @@ function processAuthorVideos(author: Author, catByIds: CategoryById): ProcessedV
     author: author.name,
     authorId: author.id,
     categories: video.catIds.map((catId) => catByIds[catId]?.name),
+    highestFormat: video.formats && getHighestVideoFormat(video.formats),
     releaseDate: video.releaseDate && parseISO(video.releaseDate),
   }));
+}
+
+function getHighestVideoFormat(formats: VideoFormatCollection): HightestVideoFormat | undefined {
+  let highestFormat;
+
+  for (const [name, format] of Object.entries(formats)) {
+    if (!highestFormat || format.size > highestFormat.size) {
+      highestFormat = { ...format, name };
+    }
+  }
+
+  return highestFormat;
 }
