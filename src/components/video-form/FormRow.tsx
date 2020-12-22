@@ -2,15 +2,12 @@ import React from 'react';
 import { Grid, makeStyles } from '@material-ui/core';
 
 type FormRowProps = {
-  label: string;
+  label?: string;
   children: React.ReactNode;
 };
 
 const useStyles = makeStyles(() => ({
-  wide: {
-    display: 'flex',
-    flexGrow: 1,
-  },
+  wide: {},
 }));
 
 export const FormRow: React.FC<FormRowProps> = (props) => {

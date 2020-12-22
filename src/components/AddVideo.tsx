@@ -1,40 +1,21 @@
-import React, { useEffect } from 'react';
-import { Grid, OutlinedInput, Select } from '@material-ui/core';
-import { FormRow } from './video-form/FormRow';
-import { useAsync } from 'react-use';
-import { getAuthors } from '../services/authors';
-import { getCategories } from '../services/categories';
+import React, { useState } from 'react';
+import { useLocation } from 'wouter';
+import { addVideo } from '../services/videos';
+import { Video } from '../common/interfaces';
+import { VideoForm } from './video-form/VideoForm';
 
 export const AddVideo: React.FC = () => {
-  const { value: authors = [] } = useAsync(() => getAuthors(), []);
-  const { value: categories = [] } = useAsync(() => getCategories(), []);
+  const [location, setLocation] = useLocation();
+  const [video, setVideo] = useState<Video>(() => ({ id: +new Date(), name: '', catIds: [] }));
+
+  const onSubmit = (authorId: number, video: Video) => {
+    addVideo(authorId, video).then(() => setLocation('/'));
+  };
 
   return (
     <>
       <h1>Add video</h1>
-      <Grid container>
-        <FormRow label="Video name">
-          <OutlinedInput placeholder="Video name" margin="dense" />
-        </FormRow>
-        <FormRow label="Video author">
-          <Select native placeholder="Video author" variant="outlined" margin="dense">
-            {authors.map((author) => (
-              <option key={author.id} value={author.id}>
-                {author.name}
-              </option>
-            ))}
-          </Select>
-        </FormRow>
-        <FormRow label="Video category">
-          <Select multiple native value={[]} variant="outlined">
-            {categories.map((cat) => (
-              <option key={cat.id} value={cat.id}>
-                {cat.name}
-              </option>
-            ))}
-          </Select>
-        </FormRow>
-      </Grid>
+      <VideoForm video={video} onSubmit={onSubmit} onCancel={() => setLocation('/')} />
     </>
   );
 };

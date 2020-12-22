@@ -1,6 +1,6 @@
 import { Author, Category, ProcessedVideo, Video } from '../common/interfaces';
 import { getCategories } from './categories';
-import { getAuthors } from './authors';
+import { getAuthorById, getAuthors, setAuthorVideos } from './authors';
 
 export function getVideos(): Promise<ProcessedVideo[]> {
   return Promise.all([getCategories(), getAuthors()]).then(([categories, authors]) => {
@@ -9,10 +9,8 @@ export function getVideos(): Promise<ProcessedVideo[]> {
 }
 
 export async function addVideo(authorId: number, video: Video) {
-  await fetch(`${process.env.REACT_APP_API}/authors/${authorId}/videos`, {
-    method: 'POST',
-    body: JSON.stringify(video),
-  });
+  const author = await getAuthorById(authorId);
+  await setAuthorVideos(authorId, [...author.videos, video]);
 }
 
 export function getProcessedVideos(authors: Author[], categories: Category[]): ProcessedVideo[] {
