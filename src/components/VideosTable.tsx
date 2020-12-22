@@ -5,9 +5,10 @@ import { Link } from 'wouter';
 
 interface VideosTableProps {
   videos: ProcessedVideo[];
+  onDelete: (video: ProcessedVideo) => void;
 }
 
-export const VideosTable: React.FC<VideosTableProps> = ({ videos }) => {
+export const VideosTable: React.FC<VideosTableProps> = ({ videos, onDelete }) => {
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -37,7 +38,7 @@ export const VideosTable: React.FC<VideosTableProps> = ({ videos }) => {
                     Edit
                   </Button>
                 </Link>
-                <Button variant="contained" color="secondary">
+                <Button variant="contained" color="secondary" onClick={() => onDelete(video)}>
                   Delete
                 </Button>
               </TableCell>
